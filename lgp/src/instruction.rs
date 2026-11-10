@@ -16,6 +16,24 @@ pub enum Opcode {
 
 }
 
+
+// choose_opcode pour le chois de l'operation
+impl Opcode {
+    
+    pub fn choose_opcode (bit_hex : u8) -> Opcode{
+        match bit_hex {
+            0 => Opcode::add,
+            1 => Opcode::sub,
+            2 => Opcode::mul,
+            3 => Opcode::div,
+            4 => Opcode::ln,
+            5 => Opcode::exp,
+            6 => Opcode::max,
+            7 => Opcode::min,
+        }
+    }
+}
+
 pub enum Register {
     R1,
     R2,
@@ -23,6 +41,18 @@ pub enum Register {
     R4,
 }
 
+// choose_opcode pour le chois de l'operation
+impl Register {
+    
+    pub fn choose_register (nb_registre : u8) -> Register{
+        match bit_hex {
+            0 => Register::R1,
+            1 => Register::R2,
+            2 => Register::R3,
+            3 => Register::R4,
+        }
+    }
+}
 
 pub struct Instruction {
     pub opcode    : Opcode,
@@ -31,3 +61,4 @@ pub struct Instruction {
     pub operande2 :  i8,
 
 }
+
