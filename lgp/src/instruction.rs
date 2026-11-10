@@ -30,6 +30,7 @@ impl Opcode {
             5 => Opcode::exp,
             6 => Opcode::max,
             7 => Opcode::min,
+            _ => panic!("opcode invalide"),
         }
     }
 }
@@ -44,12 +45,13 @@ pub enum Register {
 // choose_opcode pour le chois de l'operation
 impl Register {
     
-    pub fn choose_register (nb_registre : u8) -> Register{
-        match bit_hex {
+    pub fn choose_register (num_registre : u8) -> Register{
+        match num_registre {
             0 => Register::R1,
             1 => Register::R2,
             2 => Register::R3,
             3 => Register::R4,
+            _ => panic!("Registre invalide"),
         }
     }
 }
