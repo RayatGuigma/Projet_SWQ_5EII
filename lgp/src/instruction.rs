@@ -56,6 +56,28 @@ impl Register {
     }
 }
 
+
+pub enum Input {
+    I1,
+    I2,
+    I3,
+    I4,
+}
+
+// choose_opcode pour le chois de l'operation
+impl Input {
+    
+    pub fn choose_Input (num_input : u8) -> Input{
+        match num_input {
+            0 => Input::I1,
+            1 => Input::I2,
+            2 => Input::I3,
+            3 => Input::I4,
+            _ => panic!("input invalide"),
+        }
+    }
+}
+
 pub struct Instruction {
     pub opcode    : Opcode,
     pub output    : Register,
