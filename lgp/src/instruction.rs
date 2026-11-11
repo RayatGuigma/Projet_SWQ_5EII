@@ -3,7 +3,7 @@
 // registre two bits: 𝑅[0] : 00,𝑅[1] : 01,𝑅[2] : 10,𝑅[3] : 11.
 //input 3 bits: 𝐼[0] : 00,𝐼[1] : 01,𝐼[2] : 10,𝐼[3] : 11.
 //program input: 0, or a register: 1
-
+#[derive(Debug, PartialEq)]
 pub enum Opcode {
     Add,
     Sub,
@@ -34,7 +34,7 @@ impl Opcode {
         }
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub enum Register {
     R1,
     R2,
@@ -56,7 +56,7 @@ impl Register {
     }
 }
 
-
+#[derive(Debug, PartialEq)]
 pub enum Input {
     I1,
     I2,
@@ -86,3 +86,28 @@ pub struct Instruction {
 
 }
 
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_choose_opcode_valide (){
+       assert_eq!(Opcode::choose_opcode(0), Opcode::Add);
+       assert_eq!(Opcode::choose_opcode(1), Opcode::Sub);
+       assert_eq!(Opcode::choose_opcode(2), Opcode::Mul);
+       assert_eq!(Opcode::choose_opcode(3), Opcode::Div);
+       assert_eq!(Opcode::choose_opcode(4), Opcode::Ln);
+       assert_eq!(Opcode::choose_opcode(5), Opcode::Exp);
+       assert_eq!(Opcode::choose_opcode(6), Opcode::Max);
+       assert_eq!(Opcode::choose_opcode(7), Opcode::Min);
+    }
+    #[test]
+    #[should_panic(expected = "opcode invalide")]
+    fn test_choose_opcode_invalide(){
+        Opcode::choose_opcode(8);
+        Opcode::choose_opcode(15);
+    }
+
+}
