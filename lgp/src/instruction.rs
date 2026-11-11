@@ -5,14 +5,14 @@
 //program input: 0, or a register: 1
 
 pub enum Opcode {
-    add,
-    sub,
-    mul,
-    div,
-    ln,
-    exp,
-    max,
-    min,
+    Add,
+    Sub,
+    Mul,
+    Div,
+    Ln,
+    Exp,
+    Max,
+    Min,
 
 }
 
@@ -22,14 +22,14 @@ impl Opcode {
     
     pub fn choose_opcode (bit_hex : u8) -> Opcode{
         match bit_hex {
-            0 => Opcode::add,
-            1 => Opcode::sub,
-            2 => Opcode::mul,
-            3 => Opcode::div,
-            4 => Opcode::ln,
-            5 => Opcode::exp,
-            6 => Opcode::max,
-            7 => Opcode::min,
+            0 => Opcode::Add,
+            1 => Opcode::Sub,
+            2 => Opcode::Mul,
+            3 => Opcode::Div,
+            4 => Opcode::Ln,
+            5 => Opcode::Exp,
+            6 => Opcode::Max,
+            7 => Opcode::Min,
             _ => panic!("opcode invalide"),
         }
     }
