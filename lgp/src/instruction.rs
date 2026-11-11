@@ -125,4 +125,20 @@ mod tests {
         Register::choose_register(4);
         Register::choose_register(10);
     }
+
+     #[test]
+     fn test_choose_Input_valide (){
+        assert_eq!(Input::choose_Input(0),Input::I0);
+        assert_eq!(Input::choose_Input(1),Input::I1);
+        assert_eq!(Input::choose_Input(2),Input::I2);
+        assert_eq!(Input::choose_Input(3),Input::I3);
+
+     }
+
+      #[test]
+    #[should_panic(expected = "input invalide")]
+    fn test_choose_Input_invalide(){
+        Input::choose_Input(4);
+        Input::choose_Input(10);
+    }
 }
