@@ -77,12 +77,17 @@ impl Input {
         }
     }
 }
+#[derive(Debug, PartialEq)]
+pub enum Operand {
+    Register,
+    Input,
+}
 
 pub struct Instruction {
     pub opcode    : Opcode,
     pub output    : Register,
-    pub operande1 :  i8,
-    pub operande2 :  i8,
+    pub operande1 : Operand,
+    pub operande2 : Operand,
 
 }
 
