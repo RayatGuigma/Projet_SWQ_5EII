@@ -36,10 +36,10 @@ impl Opcode {
 }
 #[derive(Debug, PartialEq)]
 pub enum Register {
+    R0,
     R1,
     R2,
     R3,
-    R4,
 }
 
 // choose_opcode pour le chois de l'operation
@@ -47,10 +47,10 @@ impl Register {
     
     pub fn choose_register (num_registre : u8) -> Register{
         match num_registre {
-            0 => Register::R1,
-            1 => Register::R2,
-            2 => Register::R3,
-            3 => Register::R4,
+            0 => Register::R0,
+            1 => Register::R1,
+            2 => Register::R2,
+            3 => Register::R3,
             _ => panic!("Registre invalide"),
         }
     }
@@ -58,10 +58,10 @@ impl Register {
 
 #[derive(Debug, PartialEq)]
 pub enum Input {
+    I0,
     I1,
     I2,
     I3,
-    I4,
 }
 
 // choose_opcode pour le chois de l'operation
@@ -69,10 +69,10 @@ impl Input {
     
     pub fn choose_Input (num_input : u8) -> Input{
         match num_input {
-            0 => Input::I1,
-            1 => Input::I2,
-            2 => Input::I3,
-            3 => Input::I4,
+            0 => Input::I0,
+            1 => Input::I1,
+            2 => Input::I2,
+            3 => Input::I3,
             _ => panic!("input invalide"),
         }
     }
@@ -110,4 +110,19 @@ mod tests {
         Opcode::choose_opcode(15);
     }
 
+    #[test]
+     fn test_choose_register_valide (){
+        assert_eq!(Register::choose_register(0),Register::R0);
+        assert_eq!(Register::choose_register(1),Register::R1);
+        assert_eq!(Register::choose_register(2),Register::R2);
+        assert_eq!(Register::choose_register(3),Register::R3);
+
+     }
+
+      #[test]
+    #[should_panic(expected = "Registre invalide")]
+    fn test_choose_register_invalide(){
+        Register::choose_register(4);
+        Register::choose_register(10);
+    }
 }
