@@ -1,7 +1,21 @@
 use crate::instruction::{ self, Input, Instruction, Opcode, Operand, Register};
 use crate::interpreteur::{NB_INSTRUCTION, decode_instruction_64b};
 
-
+/// Récupère la valeur numérique correspondant à un opérande.
+///
+/// L'opérande peut désigner un registre ou une entrée du programme.
+/// La fonction utilise l'indice associé à cet opérande pour accéder
+/// à la valeur correspondante dans le tableau.
+///
+/// # Arguments
+///
+/// * operand - Opérande à évaluer (registre ou entrée).
+/// * registre - Tableau contenant les valeurs des 4 registres.
+/// * inputs - Tableau contenant les valeurs des 4 entrées.
+///
+/// # Returns
+///
+/// Retourne la valeur ddécimale correspondant à l'opérande.
 fn get_operand (operand : Operand, registre: &[f32; 4],inputs: &[f32; 4] ) -> f32{
      
    match operand {
@@ -15,7 +29,34 @@ fn get_operand (operand : Operand, registre: &[f32; 4],inputs: &[f32; 4] ) -> f3
     
 }
 }
-//corriger nb instruction
+
+/// Exécute un programme contenant plusieurs instructions.
+///
+/// Pour chaque instruction, la fonction récupère les valeurs
+/// des deux opérandes, effectue l'opération correspondante
+/// selon l'opcode, puis stocke le résultat dans le tableau.
+///
+/// Les opérations disponibles sont :
+/// - Addition
+/// - Soustraction
+/// - Multiplication
+/// - Division
+/// - Logarithme népérien
+/// - Exponentielle
+/// - Maximum
+/// - Minimum
+///
+/// # Arguments
+///
+/// * instructions - Vecteur contenant les instructions à exécuter.
+/// * registre - Tableau contenant les valeurs initiales des 4 registres.
+/// * inputs - Tableau contenant les valeurs des 4 entrées.
+///
+/// # Returns
+///
+/// Retourne un tableau contenant les résultats des instructions exécutées.
+///
+
 pub fn execute_programme_64b(instructions: Vec<Instruction> , registre: &[f32; 4],inputs: &[f32; 4] ) -> [f32; NB_INSTRUCTION] {
 
 
