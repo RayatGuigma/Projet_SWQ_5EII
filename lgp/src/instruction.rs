@@ -3,7 +3,7 @@
 // registre two bits: 𝑅[0] : 00,𝑅[1] : 01,𝑅[2] : 10,𝑅[3] : 11.
 //input 3 bits: 𝐼[0] : 00,𝐼[1] : 01,𝐼[2] : 10,𝐼[3] : 11.
 //program input: 0, or a register: 1
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone,Copy)]
 pub enum Opcode {
     Add,
     Sub,
@@ -34,7 +34,7 @@ impl Opcode {
         }
     }
 }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone,Copy)]
 pub enum Register {
     R0,
     R1,
@@ -65,7 +65,7 @@ impl Register {
 
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone,Copy)]
 pub enum Input {
     I0,
     I1,
@@ -96,7 +96,7 @@ impl Input {
     }
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone,Copy)]
 pub enum Operand {
     Register(Register),
     Input(Input),

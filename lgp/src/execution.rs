@@ -1,5 +1,5 @@
 use crate::instruction::{ self, Input, Instruction, Opcode, Operand, Register};
-
+use crate::interpreteur::NB_INSTRUCTION;
 
 fn get_operand (operand : Operand, registre: &[f32; 4],inputs: &[f32; 4] ) -> f32{
      
@@ -13,6 +13,30 @@ fn get_operand (operand : Operand, registre: &[f32; 4],inputs: &[f32; 4] ) -> f3
     }
     
 }
+}
+
+pub fn execute_programme_64b(instructions: Vec<Instruction> , registre: &[f32; 4],inputs: &[f32; 4] ) -> f32 {
+
+  let mut result:[f32; 4] = [0.0; 4];
+  let nb_instruction = NB_INSTRUCTION as usize ;
+
+    for i in 0..nb_instruction{
+      let a = get_operand(instructions[i].operande1, registre, inputs);
+      let b = get_operand(instructions[i].operande2, registre, inputs);
+
+        result[i] = match instructions[i].opcode {
+            Opcode::Add => a + b,
+            Opcode::Sub => a - b,
+            Opcode::Mul => a * b,
+            Opcode::Div => a / b,
+            Opcode::Ln =>  a.ln(),
+            Opcode::Exp => a.exp(),
+            Opcode::Max => a.max(b),
+            Opcode::Min => a.min(b),
+
+    }
+  }
+    result[3]
 }
 
 
