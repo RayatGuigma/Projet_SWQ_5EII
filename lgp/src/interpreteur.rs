@@ -21,7 +21,7 @@ fn decode_operand(operand_bits: u8) -> Operand {
 }
 //000 00 000 000 |0 0000 
 //opcode (3bits) -registre de sortie (2bits) -operande1 (3bits) -operande2 (3bits)
-fn decode_instruction(inst_bits: u16) -> Instruction {
+fn decode_instruction_11b(inst_bits: u16) -> Instruction {
     //let instruction_bits = inst_bits >>5;
     let instruction_bits = inst_bits ;
     let bit_opcode  = ((instruction_bits & 0b11100000000)>> 8 ) as u8 ;
@@ -53,7 +53,7 @@ fn decode_instruction_64b (programme: u64)  -> Vec<Instruction> {
          for i in 0..NB_INSTRUCTION{
             let shift = i * INSTRUCTION_SIZE;
             let instruction_actuel = ((programme >> shift) & 0x7FF) as u16;
-            instructions.push(decode_instruction(instruction_actuel));
+            instructions.push(decode_instruction_11b(instruction_actuel));
          } 
          instructions
 }
@@ -88,7 +88,7 @@ mod tests {
     #[test]
     fn test_decode_instruction(){
         let bits1: u16 = 0b00001100011; // R1 = add (R0+I3)
-        let instruction1 = decode_instruction(bits1);
+        let instruction1 = decode_instruction_11b(bits1);
 
         assert_eq!(instruction1.opcode, Opcode::Add);
         assert_eq!(instruction1.output, Register::R1);
@@ -96,7 +96,7 @@ mod tests {
         assert_eq!(instruction1.operande2,Operand::Input(Input::I3));
 
         let bits2: u16 = 0b10011101110; // R3 = lN (R1 R2)
-        let instruction2 = decode_instruction(bits2);
+        let instruction2 = decode_instruction_11b(bits2);
 
         assert_eq!(instruction2.opcode, Opcode::Ln);
         assert_eq!(instruction2.output, Register::R3);
@@ -104,5 +104,7 @@ mod tests {
         assert_eq!(instruction2.operande2,Operand::Register(Register::R2));
 
     }
+    #[test]
+  
 
 }
