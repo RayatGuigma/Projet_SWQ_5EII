@@ -105,6 +105,45 @@ mod tests {
 
     }
     #[test]
-  
+    fn test_decode_instruction_64b(){
+        //011 01 001 111; // R1 = DIV (I1 R3)
+        let bits: u64 = 0b1100110010000110001110011101110101100010100100000011001101001111;
+         // R1 = add (R0+I3), R3 = lN (R1 R2), R2 = EXP (I1 I2), R0 = MUL (I0 R2) , R1 = DIV (I1 R3)
+
+         let instructions = decode_instruction_64b(bits);
+        //for i in 0..NB_INSTRUCTION
+        
+        // R1 = add (R0+I3)
+        assert_eq!(instructions[4].opcode, Opcode::Add);
+        assert_eq!(instructions[4].output, Register::R1);
+        assert_eq!(instructions[4].operande1,Operand::Register(Register::R0));
+        assert_eq!(instructions[4].operande2,Operand::Input(Input::I3));
+
+        // R3 = lN (R1 R2)
+        assert_eq!(instructions[3].opcode, Opcode::Ln);
+        assert_eq!(instructions[3].output, Register::R3);
+        assert_eq!(instructions[3].operande1,Operand::Register(Register::R1));
+        assert_eq!(instructions[3].operande2,Operand::Register(Register::R2));
+
+        //R2 = EXP (I1 I2)
+        assert_eq!(instructions[2].opcode, Opcode::Exp);
+        assert_eq!(instructions[2].output, Register::R2);
+        assert_eq!(instructions[2].operande1,Operand::Input(Input::I1));
+        assert_eq!(instructions[2].operande2,Operand::Input(Input::I2));
+
+        //R0 = MUL (I0 R2) 
+                assert_eq!(instructions[1].opcode, Opcode::Mul);
+        assert_eq!(instructions[1].output, Register::R0);
+        assert_eq!(instructions[1].operande1,Operand::Input(Input::I0));
+        assert_eq!(instructions[1].operande2,Operand::Register(Register::R2));
+
+        //R1 = DIV (I1 R3)
+        assert_eq!(instructions[0].opcode, Opcode::Div);
+        assert_eq!(instructions[0].output, Register::R1);
+        assert_eq!(instructions[0].operande1,Operand::Input(Input::I1));
+        assert_eq!(instructions[0].operande2,Operand::Register(Register::R3));
+
+
+    }
 
 }
