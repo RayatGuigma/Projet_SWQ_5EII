@@ -1,9 +1,7 @@
-use crate::instruction::{Opcode,Register,Input,Operand,Instruction};
-
+use crate::instruction::{ Input, Instruction, Opcode, Operand, Register};
 
 //constante
 pub const INSTRUCTION_SIZE : i8 = 11;
-
 
 //program input: 0, or a register: 1
 /*
@@ -12,14 +10,40 @@ registre : 0b100 - 0b101 - 0b110 - 0b111
 
 */
 
-
 fn decode_operand(operand_bits: u8) -> Operand {
 
     if operand_bits & 0b100 == 0 {
-        Operand::Input
+        Operand::Input (Input::choose_input(operand_bits & 0b011))
     } else {
-        Operand::Register
-    }
+        Operand::Register (Register::choose_register(operand_bits & 0b011))
+    } 
+}
+//000 00 000 000 |0 0000 
+//opcode (3bits) -registre de sortie (2bits) -operande1 (3bits) -operande2 (3bits)
+fn decode_instruction(instruction_bits: u16) -> Instruction {
+    let instruct_bits = instruction_bits >>5;
+
+    let bit_opcode  = ((instruction_bits & 0b11100000000)>> 8 ) as u8 ;
+    let opcode = Opcode::choose_opcode (bit_opcode);
+
+    let bit_destination  =((instruction_bits & 0b00011000000)>> 6 ) as u8 ;
+    let destination = Register::choose_register (bit_destination );
+
+    let bit_operande1 = ((instruction_bits & 0b00000111000)>> 3 ) as u8 ;
+      let op1= decode_operand(bit_operande1) ;
+
+    let bit_operande2 = ((instruction_bits & 0b00000000111)) as u8 ;
+     let op2= decode_operand(bit_operande2);
+
+
+    let instruction =  Instruction {
+        opcode,
+        output: destination,
+        operande1: op1,
+        operande2: op2,
+    };
+
+    instruction
 }
 
 
