@@ -1,15 +1,29 @@
 use crate::instruction::{ self, Input, Instruction, Opcode, Operand, Register};
 
 //constante
+/// Nombre de bits utilisés pour coder une instruction.
 pub const INSTRUCTION_SIZE : usize = 11;
+/// Nombre d'instructions contenues dans un programme de 64 bits.
 pub const NB_INSTRUCTION :usize = 5;
 
-//program input: 0, or a register: 1
-/*
-Input : 0b000 - 0b001 - 0b010 -0b011
-registre : 0b100 - 0b101 - 0b110 - 0b111
 
-*/
+
+/// Décode un opérande à partir de sa représentation binaire.
+///
+/// Le bit de poids fort permet de déterminer le type d'opérande :
+/// - 0 : l'opérande correspond à une entrée.
+/// - 1 : l'opérande correspond à un registre.
+///
+/// Les deux bits restants permettent de déterminer l'indice
+/// de l'entrée ou du registre.
+///
+/// # Arguments
+///
+/// * operand_bits - Valeur binaire codée sur 3 bits représentant l'opérande.
+///
+/// # Returns
+///
+/// Retourne un Operand correspondant à une entrée ou à un registre.
 
 fn decode_operand(operand_bits: u8) -> Operand {
 
@@ -19,20 +33,47 @@ fn decode_operand(operand_bits: u8) -> Operand {
         Operand::Register (Register::choose_register(operand_bits & 0b011))
     } 
 }
+
+/// Décode une instruction codée sur 11 bits.
+///
+/// Une instruction est organisée de la manière suivante :
+///
+/// * Opcode : 3 bits 
+/// * Registre de destination : 2 bits 
+/// * Premier opérande : 3 bits 
+/// * Deuxième opérande : 3 bits 
+///
+/// La fonction extrait chaque champ à l'aide de masques binaires
+/// et de décalages, puis construit une structure Instruction.
+///
+/// # Arguments
+///
+/// * inst_bits - Instruction codée sur 11 bits, stockée dans un u16
+///
+/// # Returns
+///
+/// Retourne une structure Instruction contenant l'opération,
+/// le registre de destination et les deux opérandes.
+
+
 //000 00 000 000 |0 0000 
-//opcode (3bits) -registre de sortie (2bits) -operande1 (3bits) -operande2 (3bits)
+//opcode (3bits) -registre de sortie (2bits) -operande1 (3bits
 fn decode_instruction_11b(inst_bits: u16) -> Instruction {
     //let instruction_bits = inst_bits >>5;
+    // Recupopcode (bits 10 à 8)
     let instruction_bits = inst_bits ;
     let bit_opcode  = ((instruction_bits & 0b11100000000)>> 8 ) as u8 ;
     let opcode = Opcode::choose_opcode (bit_opcode);
 
+    // Recup registre de destination (bits 7 à 6)
     let bit_destination  =((instruction_bits & 0b00011000000)>> 6 ) as u8 ;
     let destination = Register::choose_register (bit_destination );
 
+    // Recup op1 (bits 5 à 3)
     let bit_operande1 = ((instruction_bits & 0b00000111000)>> 3 ) as u8 ;
       let op1= decode_operand(bit_operande1) ;
 
+      // Recup op2 (bits 2 à 0)
     let bit_operande2 = ((instruction_bits & 0b00000000111)) as u8 ;
      let op2= decode_operand(bit_operande2);
 
@@ -46,6 +87,23 @@ fn decode_instruction_11b(inst_bits: u16) -> Instruction {
 
     instruction
 }
+
+
+/// Décode un programme de 64 bits contenant 5 instructions.
+///
+/// La fonction extrait successivement les 5 instructions du programme.
+/// Chaque instruction occupe 11 bits. Pour chaque instruction,
+/// un décalage binaire permet de récupérer les 11 bits correspondants,
+/// puis la fonction decode_instruction_11b réalise son décodage.
+///
+/// # Arguments
+///
+/// * programme - Programme complet codé sur 64 bits.
+///
+/// # Returns
+///
+/// Retourne un vecteur d'instruction contenant les
+/// 5 instructions décodées, dans leur ordre d'exécution.
 
 pub fn decode_instruction_64b (programme: u64)  -> Vec<Instruction> {
         let mut instructions = Vec::new();
