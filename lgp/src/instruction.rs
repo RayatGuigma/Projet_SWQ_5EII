@@ -54,6 +54,15 @@ impl Register {
             _ => panic!("Registre invalide"),
         }
     }
+      pub fn index_registre(&self) -> usize {
+        match self {
+            Register::R0 => 0,
+            Register::R1 => 1,
+            Register::R2 => 2,
+            Register::R3 => 3,
+        }
+      }
+
 }
 
 #[derive(Debug, PartialEq)]
@@ -76,7 +85,17 @@ impl Input {
             _ => panic!("input invalide"),
         }
     }
+
+     pub fn index_input (&self) -> usize {
+        match self {
+            Input::I0 => 0,
+            Input::I1 => 1,
+            Input::I2 => 2,
+            Input::I3 => 3,
+        }
+    }
 }
+
 #[derive(Debug, PartialEq)]
 pub enum Operand {
     Register(Register),
@@ -145,5 +164,23 @@ mod tests {
     fn test_choose_input_invalide(){
         Input::choose_input(4);
         Input::choose_input(10);
+
     }
+
+    #[test]
+    fn test_index_input() {
+        assert_eq!(Input::I0.index_input(), 0);
+        assert_eq!(Input::I1.index_input(), 1);
+        assert_eq!(Input::I2.index_input(), 2);
+        assert_eq!(Input::I3.index_input(), 3);
+    }
+
+    #[test]
+    fn test_index_registre() {
+        assert_eq!(Register::R0.index_registre(), 0);
+        assert_eq!(Register::R1.index_registre(), 1);
+        assert_eq!(Register::R2.index_registre(), 2);
+        assert_eq!(Register::R3.index_registre(), 3);
+    }
+
 }
