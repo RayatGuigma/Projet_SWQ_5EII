@@ -1,7 +1,8 @@
-use crate::instruction::{ Input, Instruction, Opcode, Operand, Register};
+use crate::instruction::{ self, Input, Instruction, Opcode, Operand, Register};
 
 //constante
-pub const INSTRUCTION_SIZE : i8 = 11;
+pub const INSTRUCTION_SIZE : u8 = 11;
+pub const NB_INSTRUCTION :u8 = 5;
 
 //program input: 0, or a register: 1
 /*
@@ -46,6 +47,16 @@ fn decode_instruction(inst_bits: u16) -> Instruction {
     instruction
 }
 
+fn decode_instruction_64b (programme: u64)  -> Vec<Instruction> {
+        let mut instructions = Vec::new();
+
+         for i in 0..NB_INSTRUCTION{
+            let shift = i * INSTRUCTION_SIZE;
+            let instruction_actuel = ((programme >> shift) & 0x7FF) as u16;
+            instructions.push(decode_instruction(instruction_actuel));
+         } 
+         instructions
+}
 
 #[cfg(test)]
 mod tests {
