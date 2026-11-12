@@ -20,8 +20,8 @@ fn decode_operand(operand_bits: u8) -> Operand {
 }
 //000 00 000 000 |0 0000 
 //opcode (3bits) -registre de sortie (2bits) -operande1 (3bits) -operande2 (3bits)
-fn decode_instruction(instruction_bits: u16) -> Instruction {
-    let instruct_bits = instruction_bits >>5;
+fn decode_instruction(inst_bits: u16) -> Instruction {
+    let instruction_bits = inst_bits >>5;
 
     let bit_opcode  = ((instruction_bits & 0b11100000000)>> 8 ) as u8 ;
     let opcode = Opcode::choose_opcode (bit_opcode);
@@ -53,25 +53,25 @@ mod tests {
 
     #[test]
     fn test_decode_operand (){
-        assert_eq!(decode_operand(0b000),Operand::Input);
-        assert_eq!(decode_operand(0b001),Operand::Input);
-        assert_eq!(decode_operand(0b010),Operand::Input);
-        assert_eq!(decode_operand(0b011),Operand::Input);
+        assert_eq!(decode_operand(0b000),Operand::Input(Input::I0));
+        assert_eq!(decode_operand(0b001),Operand::Input(Input::I1));
+        assert_eq!(decode_operand(0b010),Operand::Input(Input::I2));
+        assert_eq!(decode_operand(0b011),Operand::Input(Input::I3));
 
-        assert_eq!(decode_operand(0),Operand::Input);
-        assert_eq!(decode_operand(1),Operand::Input);
-        assert_eq!(decode_operand(2),Operand::Input);
-        assert_eq!(decode_operand(3),Operand::Input);
+        assert_eq!(decode_operand(0),Operand::Input(Input::I0));
+        assert_eq!(decode_operand(1),Operand::Input(Input::I1));
+        assert_eq!(decode_operand(2),Operand::Input(Input::I2));
+        assert_eq!(decode_operand(3),Operand::Input(Input::I3));
 
-        assert_eq!(decode_operand(0b100),Operand::Register);
-        assert_eq!(decode_operand(0b101),Operand::Register);
-        assert_eq!(decode_operand(0b110),Operand::Register);
-        assert_eq!(decode_operand(0b111),Operand::Register);
+        assert_eq!(decode_operand(0b100),Operand::Register(Register::R0));
+        assert_eq!(decode_operand(0b101),Operand::Register(Register::R1));
+        assert_eq!(decode_operand(0b110),Operand::Register(Register::R2));
+        assert_eq!(decode_operand(0b111),Operand::Register(Register::R3));
 
-        assert_eq!(decode_operand(4),Operand::Register);
-        assert_eq!(decode_operand(5),Operand::Register);
-        assert_eq!(decode_operand(6),Operand::Register);
-        assert_eq!(decode_operand(7),Operand::Register);
+        assert_eq!(decode_operand(4),Operand::Register(Register::R0));
+        assert_eq!(decode_operand(5),Operand::Register(Register::R1));
+        assert_eq!(decode_operand(6),Operand::Register(Register::R2));
+        assert_eq!(decode_operand(7),Operand::Register(Register::R3));
     }
 
 }

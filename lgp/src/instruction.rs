@@ -67,7 +67,7 @@ pub enum Input {
 // choose_opcode pour le chois de l'operation
 impl Input {
     
-    pub fn choose_Input (num_input : u8) -> Input{
+    pub fn choose_input (num_input : u8) -> Input{
         match num_input {
             0 => Input::I0,
             1 => Input::I1,
@@ -79,10 +79,10 @@ impl Input {
 }
 #[derive(Debug, PartialEq)]
 pub enum Operand {
-    Register,
-    Input,
+    Register(Register),
+    Input(Input),
 }
-
+#[derive(Debug, PartialEq)]
 pub struct Instruction {
     pub opcode    : Opcode,
     pub output    : Register,
@@ -132,18 +132,18 @@ mod tests {
     }
 
      #[test]
-     fn test_choose_Input_valide (){
-        assert_eq!(Input::choose_Input(0),Input::I0);
-        assert_eq!(Input::choose_Input(1),Input::I1);
-        assert_eq!(Input::choose_Input(2),Input::I2);
-        assert_eq!(Input::choose_Input(3),Input::I3);
+     fn test_choose_input_valide (){
+        assert_eq!(Input::choose_input(0),Input::I0);
+        assert_eq!(Input::choose_input(1),Input::I1);
+        assert_eq!(Input::choose_input(2),Input::I2);
+        assert_eq!(Input::choose_input(3),Input::I3);
 
      }
 
       #[test]
     #[should_panic(expected = "input invalide")]
-    fn test_choose_Input_invalide(){
-        Input::choose_Input(4);
-        Input::choose_Input(10);
+    fn test_choose_input_invalide(){
+        Input::choose_input(4);
+        Input::choose_input(10);
     }
 }
