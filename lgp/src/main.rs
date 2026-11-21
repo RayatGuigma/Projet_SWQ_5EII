@@ -2,6 +2,7 @@ use env::{cartpole::CartPole, Environment, pcgrng::PCGRng};
 mod instruction;
 mod interpreteur;
 mod execution;
+mod evaluation;
 
 fn main() {
     let seed = 1;

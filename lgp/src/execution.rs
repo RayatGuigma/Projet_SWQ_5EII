@@ -57,7 +57,7 @@ fn get_operand (operand : Operand, registre: &[f32; 4],inputs: &[f32; 4] ) -> f3
 /// Retourne un tableau contenant les résultats des instructions exécutées.
 ///
 
-pub fn execute_programme_64b(instructions: Vec<Instruction> , registre: &[f32; 4],inputs: &[f32; 4] ) -> [f32; NB_INSTRUCTION] {
+pub fn execute_programme_64b(instructions: &Vec<Instruction> , registre: &[f32; 4],inputs: &[f32; 4] ) -> [f32; NB_INSTRUCTION] {
 
 
   //let nb_instruction = NB_INSTRUCTION as usize ;
@@ -118,7 +118,7 @@ mod tests {
         let inputs: [f32; 4]   = [9.8, 12.5, 53.0, 11.2];
 
         let instructions = decode_instruction_64b(bits);
-        let result: [f32; NB_INSTRUCTION]= execute_programme_64b (instructions,&registre,&inputs);
+        let result: [f32; NB_INSTRUCTION]= execute_programme_64b (&instructions,&registre,&inputs);
         // R1 = add (R0+I3)
         assert_eq!(result[4], registre[0]+inputs[3]);
 
