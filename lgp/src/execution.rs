@@ -72,6 +72,10 @@ pub fn execute_programme_64b(instructions: &Vec<Instruction> , registre: &mut[f3
       let b = get_operand(instructions[i].operande2, registre, inputs);
         let index_ouput = instructions[i].output.index_registre();
 
+        println!("Avant instruction {}", i);
+println!("Registres : {:?}", registre);
+
+
         result[i] = match instructions[i].opcode {
             Opcode::Add => a + b,
             Opcode::Sub => a - b,
@@ -87,6 +91,10 @@ pub fn execute_programme_64b(instructions: &Vec<Instruction> , registre: &mut[f3
     registre[index_ouput]= result[i] ;
     //instructions[i].output = result[i
     //mettre a jour le registre ?
+    
+println!("Résultat : {}", result[i]);
+println!("Après instruction {}", i);
+println!("Registres : {:?}", registre);
   }
     result
 }
@@ -120,26 +128,37 @@ mod tests {
         let bits: u64 = 0b1100110010000110001110011101110101100010100100000011001101001111;
          // R1 = add (R0+I3), R3 = lN (R1 R2), R2 = EXP (I1 I2), R0 = MUL (I0 R2) , R1 = DIV (I1 R3)
                                 // 0 -   1 -    2 -   3
-        let mut registre: [f32; 4] = [12.0, 16.5, 8.02, 13.9];
+        let registre_initial: [f32; 4] = [12.0, 16.5, 8.02, 13.9];
+        let mut registre = registre_initial;
         let inputs: [f32; 4]   = [9.8, 12.5, 53.0, 11.2];
 
         let instructions = decode_instruction_64b(bits);
         let result: [f32; NB_INSTRUCTION]= execute_programme_64b (&instructions,&mut registre,&inputs);
-        // R1 = add (R0+I3)
-        assert_eq!(result[4], registre[0]+inputs[3]);
+       
+       //test non fnctionnel car je fais des egalité avec des val éronnées
 
-        // R3 = lN (R1 R2)
-        assert_eq!(result[3], registre[1].ln() );
 
-        //R2 = EXP (I1 I2)
-        assert_eq!(result[2],inputs[1].exp());
+        //R1 = DIV (I1 R3)
+        let div = inputs[1] / registre_initial[3];
+        assert_eq!(result[0],div );
+       
 
         //R0 = MUL (I0 R2) 
-        assert_eq!(result[1], inputs[0]*registre[2] );
+        let mul = inputs[0] * registre_initial[2];
+        assert_eq!(result[1], mul );
+
+        //R2 = EXP (I1 I2)
+        let exp = inputs[1].exp();
+        assert_eq!(result[2],exp);
+
+        // R3 = lN (R1 R2)
+        let ln = div.ln();
+        assert_eq!(result[3], ln);
         
-        //R1 = DIV (I1 R3)
-        assert_eq!(result[0],inputs[1]/registre[3] );
-        
+         // R1 = add (R0+I3)
+         let add = mul + inputs[3];
+        assert_eq!(result[4], add);  //[12.0, 23.2, 8.02, 13.9]*/
+
 
     }
 
