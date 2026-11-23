@@ -56,8 +56,12 @@ fn get_operand (operand : Operand, registre: &[f32; 4],inputs: &[f32; 4] ) -> f3
 ///
 /// Retourne un tableau contenant les résultats des instructions exécutées.
 ///
+/// 
 
-pub fn execute_programme_64b(instructions: &Vec<Instruction> , registre: &[f32; 4],inputs: &[f32; 4] ) -> [f32; NB_INSTRUCTION] {
+
+
+
+pub fn execute_programme_64b(instructions: &Vec<Instruction> , registre: &mut[f32; 4],inputs: &[f32; 4] ) -> [f32; NB_INSTRUCTION] {
 
 
   //let nb_instruction = NB_INSTRUCTION as usize ;
@@ -66,6 +70,7 @@ pub fn execute_programme_64b(instructions: &Vec<Instruction> , registre: &[f32; 
     for i in 0..NB_INSTRUCTION{
       let a = get_operand(instructions[i].operande1, registre, inputs);
       let b = get_operand(instructions[i].operande2, registre, inputs);
+        let index_ouput = instructions[i].output.index_registre();
 
         result[i] = match instructions[i].opcode {
             Opcode::Add => a + b,
@@ -78,7 +83,8 @@ pub fn execute_programme_64b(instructions: &Vec<Instruction> , registre: &[f32; 
             Opcode::Min => a.min(b),
             
 
-    }
+    };
+    registre[index_ouput]= result[i] ;
     //instructions[i].output = result[i
     //mettre a jour le registre ?
   }
@@ -114,11 +120,11 @@ mod tests {
         let bits: u64 = 0b1100110010000110001110011101110101100010100100000011001101001111;
          // R1 = add (R0+I3), R3 = lN (R1 R2), R2 = EXP (I1 I2), R0 = MUL (I0 R2) , R1 = DIV (I1 R3)
                                 // 0 -   1 -    2 -   3
-        let registre: [f32; 4] = [12.0, 16.5, 8.02, 13.9];
+        let mut registre: [f32; 4] = [12.0, 16.5, 8.02, 13.9];
         let inputs: [f32; 4]   = [9.8, 12.5, 53.0, 11.2];
 
         let instructions = decode_instruction_64b(bits);
-        let result: [f32; NB_INSTRUCTION]= execute_programme_64b (&instructions,&registre,&inputs);
+        let result: [f32; NB_INSTRUCTION]= execute_programme_64b (&instructions,&mut registre,&inputs);
         // R1 = add (R0+I3)
         assert_eq!(result[4], registre[0]+inputs[3]);
 

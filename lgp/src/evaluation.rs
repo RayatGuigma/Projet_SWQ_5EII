@@ -20,7 +20,7 @@ pub fn evaluate_episode(program: u64,env: &mut CartPole, max_steps: usize) -> f3
 
         for _ in 0..max_steps {
 //les registe a zero de base ?
-            let registers = execute_programme_64b(&instructions,&registre,&state,); // tab de 5 pour chaq prog
+            let registers = execute_programme_64b(&instructions,&mut registre,&state,); // tab de 5 pour chaq prog
 
             let output = registers[0];
 
