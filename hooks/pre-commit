@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "Formatage du projet Rust..."
+
+# Formater tous les fichiers Rust du workspace
+cargo fmt --all
+
+if [ $? -ne 0 ]; then
+    echo "Erreur pendant le formatage."
+    exit 1
+fi
