@@ -1,8 +1,8 @@
 use std::f32::consts::PI;
 
 use rand::Rng;
-use rand_distr::Uniform;
 use rand_distr::Distribution;
+use rand_distr::Uniform;
 
 use crate::{Environment, Score, State, pcgrng::PCGRng};
 

@@ -4,10 +4,9 @@
 //! les opérandes et la structure Instruction.
 //! Il contient également les tests unitaires associés.
 
-
 ///  Définit les opérations disponibles dans le processeur.
 /// Chaque opération est représentée par un opcode codé sur 3 bits.
-#[derive(Debug, PartialEq, Clone,Copy)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Opcode {
     /// Addition : code binaire 000
     Add,
@@ -25,12 +24,9 @@ pub enum Opcode {
     Max,
     /// Minimum : code binaire 111
     Min,
-
 }
 
-
 impl Opcode {
-
     /// la fonction choose_opcode convertit une valeur numérique en opcode.
     ///
     /// # Arguments
@@ -44,7 +40,7 @@ impl Opcode {
     /// # Panics
     ///
     /// Déclenche une panique si la valeur est supérieure à 7.
-    pub fn choose_opcode (bit_hex : u8) -> Opcode{
+    pub fn choose_opcode(bit_hex: u8) -> Opcode {
         match bit_hex {
             0 => Opcode::Add,
             1 => Opcode::Sub,
@@ -61,7 +57,7 @@ impl Opcode {
 
 /// Définit les registres utilisables.
 /// Chaque registre est codé sur 2 bits.
-#[derive(Debug, PartialEq, Clone,Copy)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Register {
     /// Registre 0 : code binaire 00
     R0,
@@ -75,7 +71,6 @@ pub enum Register {
 
 // choose_opcode pour le chois de l'operation
 impl Register {
-        
     /// choose_register convertit une valeur numérique en un registre du programme.
     ///
     /// Cette fonction permet d'associer une valeur comprise entre 0 et 3
@@ -88,7 +83,7 @@ impl Register {
     /// # Returns
     ///
     /// Retourne la variante Registre correspondant à la valeur fournie
-    pub fn choose_register (num_registre : u8) -> Register{
+    pub fn choose_register(num_registre: u8) -> Register {
         match num_registre {
             0 => Register::R0,
             1 => Register::R1,
@@ -107,21 +102,19 @@ impl Register {
     ///
     /// Retourne un usize correspondant à l'indice du registre
 
-      pub fn index_registre(&self) -> usize {
+    pub fn index_registre(&self) -> usize {
         match self {
             Register::R0 => 0,
             Register::R1 => 1,
             Register::R2 => 2,
             Register::R3 => 3,
         }
-      }
-
+    }
 }
-
 
 /// Définit les entrées.
 /// Chaque entrées est codé sur 2 bits.
-#[derive(Debug, PartialEq, Clone,Copy)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Input {
     /// Input 0 : code binaire 00
     I0,
@@ -132,7 +125,6 @@ pub enum Input {
     /// Input 3 : code binaire 11
     I3,
 }
-
 
 impl Input {
     /// Convertit une valeur numérique en une entrée du programme.
@@ -146,8 +138,8 @@ impl Input {
     ///
     /// # Returns
     ///
-    /// Retourne la variante Input correspondant à la valeur fournie 
-    pub fn choose_input (num_input : u8) -> Input{
+    /// Retourne la variante Input correspondant à la valeur fournie
+    pub fn choose_input(num_input: u8) -> Input {
         match num_input {
             0 => Input::I0,
             1 => Input::I1,
@@ -165,7 +157,7 @@ impl Input {
     /// # Returns
     ///
     /// Retourne un usize correspondant à l'indice de l'entrée
-     pub fn index_input (&self) -> usize {
+    pub fn index_input(&self) -> usize {
         match self {
             Input::I0 => 0,
             Input::I1 => 1,
@@ -175,15 +167,13 @@ impl Input {
     }
 }
 
-
 /// Définit les opérandes des instruction.
 /// Chaque operande est codé sur 3 bits.
-#[derive(Debug, PartialEq, Clone,Copy)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Operand {
     Register(Register),
     Input(Input),
 }
-
 
 /// Représente une instruction du programme.
 ///
@@ -201,17 +191,14 @@ pub enum Operand {
 #[derive(Debug, PartialEq)]
 pub struct Instruction {
     /// Opération à effectuer.
-    pub opcode    : Opcode,
+    pub opcode: Opcode,
     /// Registre de destination du résultat.
-    pub output    : Register,
+    pub output: Register,
     /// Premier opérande de l'instruction.
-    pub operande1 : Operand,
+    pub operande1: Operand,
     /// Deuxième opérande de l'instruction.
-    pub operande2 : Operand,
-
+    pub operande2: Operand,
 }
-
-
 
 #[cfg(test)]
 mod tests {
@@ -219,21 +206,21 @@ mod tests {
     /// La fonction test_choose_opcode_valide vérifie que chaque valeur numérique valide
     /// correspond au bon opcode.
     #[test]
-    fn test_choose_opcode_valide (){
-       assert_eq!(Opcode::choose_opcode(0), Opcode::Add);
-       assert_eq!(Opcode::choose_opcode(1), Opcode::Sub);
-       assert_eq!(Opcode::choose_opcode(2), Opcode::Mul);
-       assert_eq!(Opcode::choose_opcode(3), Opcode::Div);
-       assert_eq!(Opcode::choose_opcode(4), Opcode::Ln);
-       assert_eq!(Opcode::choose_opcode(5), Opcode::Exp);
-       assert_eq!(Opcode::choose_opcode(6), Opcode::Max);
-       assert_eq!(Opcode::choose_opcode(7), Opcode::Min);
+    fn test_choose_opcode_valide() {
+        assert_eq!(Opcode::choose_opcode(0), Opcode::Add);
+        assert_eq!(Opcode::choose_opcode(1), Opcode::Sub);
+        assert_eq!(Opcode::choose_opcode(2), Opcode::Mul);
+        assert_eq!(Opcode::choose_opcode(3), Opcode::Div);
+        assert_eq!(Opcode::choose_opcode(4), Opcode::Ln);
+        assert_eq!(Opcode::choose_opcode(5), Opcode::Exp);
+        assert_eq!(Opcode::choose_opcode(6), Opcode::Max);
+        assert_eq!(Opcode::choose_opcode(7), Opcode::Min);
     }
 
     /// La fonction test_choose_opcode_invalide vérifie qu'une valeur d'opcode invalide provoque une panique.
     #[test]
     #[should_panic(expected = "opcode invalide")]
-    fn test_choose_opcode_invalide(){
+    fn test_choose_opcode_invalide() {
         Opcode::choose_opcode(8);
         //Opcode::choose_opcode(15);
     }
@@ -241,40 +228,37 @@ mod tests {
     /// La fonction test_choose_register_valide vérifie que les valeurs numériques de 0 à 3
     /// sont correctement converties en registres.
     #[test]
-     fn test_choose_register_valide (){
-        assert_eq!(Register::choose_register(0),Register::R0);
-        assert_eq!(Register::choose_register(1),Register::R1);
-        assert_eq!(Register::choose_register(2),Register::R2);
-        assert_eq!(Register::choose_register(3),Register::R3);
+    fn test_choose_register_valide() {
+        assert_eq!(Register::choose_register(0), Register::R0);
+        assert_eq!(Register::choose_register(1), Register::R1);
+        assert_eq!(Register::choose_register(2), Register::R2);
+        assert_eq!(Register::choose_register(3), Register::R3);
+    }
 
-     }
-
-     /// La fonction test_choose_register_invalide vérifie qu'une valeur de registre invalide provoque une panique.
-      #[test]
+    /// La fonction test_choose_register_invalide vérifie qu'une valeur de registre invalide provoque une panique.
+    #[test]
     #[should_panic(expected = "Registre invalide")]
-    fn test_choose_register_invalide(){
+    fn test_choose_register_invalide() {
         Register::choose_register(4);
         //Register::choose_register(10);
     }
 
     /// la fonction test_choose_input_valide vérifie que les valeurs numériques de 0 à 3
     /// sont correctement converties en entrées.
-     #[test]
-     fn test_choose_input_valide (){
-        assert_eq!(Input::choose_input(0),Input::I0);
-        assert_eq!(Input::choose_input(1),Input::I1);
-        assert_eq!(Input::choose_input(2),Input::I2);
-        assert_eq!(Input::choose_input(3),Input::I3);
+    #[test]
+    fn test_choose_input_valide() {
+        assert_eq!(Input::choose_input(0), Input::I0);
+        assert_eq!(Input::choose_input(1), Input::I1);
+        assert_eq!(Input::choose_input(2), Input::I2);
+        assert_eq!(Input::choose_input(3), Input::I3);
+    }
 
-     }
-
-     /// la fonction test_choose_input_invalide vérifie qu'une valeur d'entrée invalide provoque une panique.
+    /// la fonction test_choose_input_invalide vérifie qu'une valeur d'entrée invalide provoque une panique.
     #[test]
     #[should_panic(expected = "input invalide")]
-    fn test_choose_input_invalide(){
+    fn test_choose_input_invalide() {
         Input::choose_input(4);
         Input::choose_input(10);
-
     }
 
     /// la fonction test_index_input vérifie que chaque entrée retourne le bon indice numérique.
@@ -294,5 +278,4 @@ mod tests {
         assert_eq!(Register::R2.index_registre(), 2);
         assert_eq!(Register::R3.index_registre(), 3);
     }
-
 }

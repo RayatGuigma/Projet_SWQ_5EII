@@ -1,6 +1,9 @@
 use std::convert::Infallible;
 
-use rand::{TryRng, rand_core::utils::{fill_bytes_via_next_word, next_u64_via_u32}};
+use rand::{
+    TryRng,
+    rand_core::utils::{fill_bytes_via_next_word, next_u64_via_u32},
+};
 
 pub struct PCGRng {
     state: u64,
@@ -47,6 +50,6 @@ impl TryRng for PCGRng {
     }
 
     fn try_fill_bytes(&mut self, dst: &mut [u8]) -> Result<(), Self::Error> {
-      fill_bytes_via_next_word(dst, || { Ok(self.next_u32()) })
+        fill_bytes_via_next_word(dst, || Ok(self.next_u32()))
     }
 }

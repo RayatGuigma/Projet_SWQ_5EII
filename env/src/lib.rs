@@ -7,8 +7,8 @@ pub mod pcgrng;
 /// a [Program] on an episode (or various episodes).
 pub type Score = f32;
 
-/// The [State] are 4 values that represent the current state 
-/// of an environment. 
+/// The [State] are 4 values that represent the current state
+/// of an environment.
 pub type State = [f32; 4];
 
 pub trait Environment {

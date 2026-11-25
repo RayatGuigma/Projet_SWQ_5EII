@@ -1,8 +1,8 @@
-use env::{cartpole::CartPole, Environment, pcgrng::PCGRng};
+use env::{Environment, cartpole::CartPole, pcgrng::PCGRng};
+mod evaluation;
+mod execution;
 mod instruction;
 mod interpreteur;
-mod execution;
-mod evaluation;
 
 fn main() {
     let seed = 1;
