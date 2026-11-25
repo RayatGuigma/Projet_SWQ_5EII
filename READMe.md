@@ -3,3 +3,5 @@ Mise en place d'un workflow GitHub Actions permettant d'exécuter automatiquemen
 Génération de la documentation du projet à l'aide de la commande suivante :  cargo doc --open 
 
 Formatage du code à l'aide de la commande : cargo fmt 
+
+Utiliser le hooks de pre-commit present : git config core.hooksPath hooks
