@@ -22,3 +22,4 @@ fn main() {
 
     println!("Total reward: {}", total_reward)
 }
+//test hooks de formatage de code
