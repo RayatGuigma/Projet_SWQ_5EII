@@ -1,0 +1,4 @@
+# personnalisation du formateur rust
+max_width = 150
+use_small_heuristics = "Max"
+reorder_imports = true
