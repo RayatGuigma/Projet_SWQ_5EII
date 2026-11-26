@@ -28,9 +28,7 @@ impl PCGRng {
     pub fn next_u32(&mut self) -> u32 {
         let oldstate = self.state;
         // Advance internal state
-        self.state = oldstate
-            .wrapping_mul(6364136223846793005u64)
-            .wrapping_add(self.inc | 1);
+        self.state = oldstate.wrapping_mul(6364136223846793005u64).wrapping_add(self.inc | 1);
         // Calculate output function (XSH RR), uses old state for max ILP
         let xorshifted = ((oldstate >> 18u32) ^ oldstate) >> 27u32;
         let rot = oldstate >> 59u32;

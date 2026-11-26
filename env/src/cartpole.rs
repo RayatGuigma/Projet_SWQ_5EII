@@ -41,11 +41,7 @@ impl Environment for CartPole {
             return ([self.x, self.x_dot, self.theta, self.theta_dot], 0., true);
         }
 
-        let force = if action > 0. {
-            self.force_mag
-        } else {
-            -self.force_mag
-        };
+        let force = if action > 0. { self.force_mag } else { -self.force_mag };
 
         let sin = self.theta.sin();
         let cos = self.theta.cos();

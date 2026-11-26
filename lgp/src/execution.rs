@@ -52,11 +52,7 @@ fn get_operand(operand: Operand, registre: &[f32; 4], inputs: &[f32; 4]) -> f32 
 ///
 ///
 
-pub fn execute_programme_64b(
-    instructions: &Vec<Instruction>,
-    registre: &mut [f32; 4],
-    inputs: &[f32; 4],
-) -> [f32; NB_INSTRUCTION] {
+pub fn execute_programme_64b(instructions: &Vec<Instruction>, registre: &mut [f32; 4], inputs: &[f32; 4]) -> [f32; NB_INSTRUCTION] {
     //let nb_instruction = NB_INSTRUCTION as usize ;
     let mut result: [f32; 5] = [0.0; 5];
 
@@ -120,8 +116,7 @@ mod tests {
         let inputs: [f32; 4] = [9.8, 12.5, 53.0, 11.2];
 
         let instructions = decode_instruction_64b(bits);
-        let result: [f32; NB_INSTRUCTION] =
-            execute_programme_64b(&instructions, &mut registre, &inputs);
+        let result: [f32; NB_INSTRUCTION] = execute_programme_64b(&instructions, &mut registre, &inputs);
 
         //test non fnctionnel car je fais des egalité avec des val éronnées
 

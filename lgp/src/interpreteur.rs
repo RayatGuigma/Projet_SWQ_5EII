@@ -73,12 +73,7 @@ fn decode_instruction_11b(inst_bits: u16) -> Instruction {
     let bit_operande2 = (instruction_bits & 0b00000000111) as u8;
     let op2 = decode_operand(bit_operande2);
 
-    let instruction = Instruction {
-        opcode,
-        output: destination,
-        operande1: op1,
-        operande2: op2,
-    };
+    let instruction = Instruction { opcode, output: destination, operande1: op1, operande2: op2 };
 
     instruction
 }
