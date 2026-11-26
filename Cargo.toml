@@ -2,5 +2,8 @@
 resolver = "3"
 members = ["env", "lgp"]
 
+[workspace.package]
+license = "MIT"
+
 [workspace.dependencies]
 rand = "0.10.2"
